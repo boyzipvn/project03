@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: backend-feed
+  name: backend-feed
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-feed
+  template:
+    metadata:
+      labels:
+        app: backend-feed
+    spec:
+      containers:
+      - image: manhhong/udagram-api-feed:v1
+        name: udagram-api-feed 
+        imagePullPolicy: Always  
+        env:
+        - name: URL
+          value: http://localhost:8080
+        - name: JWT_SECRET
+          value: testing
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_HOST
+          value: project-031.cde70dbnha7s.us-east-1.rds.amazonaws.com
+        - name: POSTGRES_PASSWORD
+          value: admin123
+        - name: POSTGRES_USERNAME
+          value: manhvv
+        - name: AWS_BUCKET
+          value: arn:aws:s3:::project-03-1
+      restartPolicy: Always

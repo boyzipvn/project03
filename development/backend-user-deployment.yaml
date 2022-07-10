@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: backend-user
+  name: backend-user
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-user
+  template:
+    metadata:
+      labels:
+        app: backend-user
+    spec:
+      containers:
+      - image: manhhong/udagram-api-user:v1
+        name: udagram-api-user 
+        imagePullPolicy: Always  
+        env:
+        - name: URL
+          value: http://localhost:8080
+        - name: JWT_SECRET
+          value: testing
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_HOST
+          value: project-031.cde70dbnha7s.us-east-1.rds.amazonaws.com
+        - name: POSTGRES_PASSWORD
+          value: admin123
+        - name: POSTGRES_USERNAME
+          value: manhvv
+        - name: AWS_BUCKET
+          value: arn:aws:s3:::project-03-1
+      restartPolicy: Always
+
